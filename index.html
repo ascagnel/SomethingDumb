@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <link rel="stylesheet" type="text/css" href="css/page.css">
+    </head>
+    <body onload="load()">
+        <h1>Coworker say something dumb?  Share it!</h1>
+        <div id="entry">
+            <input type="text" id="inputText" />
+            <input type="button" onclick="submit()" value="Submit!"/>
+        </div>
+        <div id="dumbass" style="display: none;">You're a dumbass!  Write something first!</div>
+        <div id="dumbstuff">
+        </div>
+    </body>
+    
+<script type="text/javascript">
+var data;
+function load() {
+    
+    delete localStorage['data'];
+    if (localStorage == null || localStorage.length == 0) {
+        console.log("No local storage object found.");
+        return;
+    }
+
+    console.log("Found local storage object with length " + localStorage.length);
+
+    draw();
+}
+
+function submit() {
+    var inputText= document.getElementById("inputText").value;
+    if (inputText == null || inputText == "") {
+        document.getElementById("dumbass").style.display = "block";
+        return;
+    } else
+        document.getElementById("dumbass").style.display = "none";
+
+    console.log("Submitting " + inputText);
+    localStorage[localStorage.length+1]= inputText;
+    
+    draw();
+}
+
+function draw() {
+    var text= "<p>You said:</p><ul>";
+    console.log("localStorage.length: " + localStorage.length);
+    for (var i= localStorage.length; ((localStorage.length-i) < 10) && (i > 0); i--) {
+        text= text + "<li>" + localStorage[i] + "</li>";
+    }
+    text= text + "</ul>";
+
+    document.getElementById("dumbstuff").innerHTML= text;
+}
+</script>
+
+</html>
